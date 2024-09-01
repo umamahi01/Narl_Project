@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- Set-ExecutionPolicy Unrestricted -Scope Process -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Set-ExecutionPolicy Unrestricted -Scope Process</title>
+    <title>Climate Report Config/Map_View</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         body {
@@ -320,7 +321,7 @@ function showModal(city) {
 function showRainfall(city){
     // Fetch and display rainfall data using the correct city name
     var dataContainer = document.getElementById("dataContainer");
-    dataContainer.innerHTML = "<b>Rainfall Data for " + city + "</b>";
+    dataContainer.innerHTML = "<b>Rainfall Data for " + city + "</b><br/>";
     var rainfallFilePath = `/stat/${city}_rainfall.txt`;
     fetch(rainfallFilePath)
         .then(response => {
@@ -343,7 +344,7 @@ function showRainfall(city){
 }
 function showMinTemp(city) {
     var dataContainer = document.getElementById("dataContainer");
-    dataContainer.innerHTML = "<b>Min Temperature Data for " + city + "</b>";
+    dataContainer.innerHTML = "<b>Min Temperature Data for " + city + "</b><br/>";
 
     // Fetch and display min temperature data using the correct city name
     var minFilePath = `/stat/${city}_mint.txt`;
@@ -368,7 +369,7 @@ function showMinTemp(city) {
 }
 function showMaxTemp(city) {
     var dataContainer = document.getElementById("dataContainer");
-    dataContainer.innerHTML = "<b>Max Temperature Data for " + city + "</b>";
+    dataContainer.innerHTML = "<b>Max Temperature Data for " + city + "</b><br/>";
 
     // Fetch and display max temperature data using the correct city name
     var maxFilePath = `/stat/${city}_maxt.txt`;
@@ -451,11 +452,7 @@ function handleSubmit() {
         zoomToSelectedCity()
       }
     }
-
-// Rest of your code...
-
-
-// Function to create table from CSV data with a title
+//to create table
 function createTable(data, title) {
     const rows = data.split(/\r?\n/); // Split by newline characters
     const table = document.createElement('table');
@@ -463,7 +460,8 @@ function createTable(data, title) {
     // Create table title row
     const titleRow = document.createElement('tr');
     const titleCell = document.createElement('th');
-    titleCell.colSpan = 2; // Span the entire row
+  
+    titleCell.colSpan = 2;  // Span the entire row
     titleCell.textContent = title;
     titleRow.appendChild(titleCell);
     table.appendChild(titleRow);
@@ -491,6 +489,10 @@ function createTable(data, title) {
 
     return table;
 }
+
+
+
+
 
 
 
