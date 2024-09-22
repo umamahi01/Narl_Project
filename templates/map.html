@@ -11,17 +11,17 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         body {
-            /* overflow-y:scroll;  */
+            
              
             display: flex;
             flex-direction: column;
             height: 100vh;
             margin: 0;
-            /* overflow-y: hidden; */
+            
             font-family: Arial, sans-serif;
         }
         table {
-            margin: 20px auto; /* Center the table horizontally */
+            margin: 20px auto; 
             border-collapse: collapse;
             width: 60%;
         }
@@ -34,41 +34,41 @@
             background-color: #f2f2f2;
             font-weight: bold;
         }
-        /* Define styles for first row text */
+       
         table tr:first-child th {
             text-align: center;
         }
-        /* Define styles for vertical lines dividing cells */
+       
         table tr td  {
             border-left: 2px solid #000;
             border-right:2px solid #000;
         }
-        /* Remove left border from first cell in each row */
+        
         table tr td:first-child {
             border-left: 2px solid #000;
         }
      
      
         select {
-    width: 200px; /* Set a specific width */
-    height: 28px; /* Set a specific height */
+    width: 200px; 
+    height: 28px; 
     border: 2px solid #bab8b8;
     border-radius: 2px;
     padding: 5px;
     font-size: 14px;
-    position: relative; /* Ensure proper positioning */
-    z-index: 10; /* Ensure it appears above other elements */
-    direction: ltr; /* Left to right dropdown */
-    appearance: none; /* Remove default styles in some browsers */
+    position: relative; 
+    z-index: 10; 
+    direction: ltr; 
+    appearance: none; 
 }
 select:focus {
-    overflow: visible; /* Ensures dropdown opens fully */
+    overflow: visible;
 }
 
 
 
     button {
-      /* margin-top: 10px; */
+      margin-top: 10px;
       padding: 8px 40px;
       font-size: 14px;
       cursor: pointer;
@@ -84,8 +84,8 @@ select:focus {
             flex: 1;
             flex-direction: row;
         justify-content: space-between;
-        height: 90vh; /* 90% of the viewport height */
-        padding: 20px; /* Add padding around the container */
+        height: 90vh; 
+        padding: 20px;
         }
 
         form {
@@ -95,41 +95,41 @@ select:focus {
 
         #map {
             margin-bottom: 5px;
-            /* height: 60vh; */
+           
             flex: 1;
            max-width:100%;
-            height: 70vh; /* Full height of the container */
-        border: 1px solid rgb(12, 11, 11); /* Optional: Add a border for clarity */
-            /* padding-top: 10px; */
+            height: 70vh; 
+        border: 1px solid rgb(12, 11, 11); /
+          
         }
      
 
        
        /* CSS for modal */
 .modal {
-    display: none; /* Hidden by default */
-    position:absolute; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 50%; /* Center horizontally */
-    top: 50%; /* Center vertically */
-    transform: translate(-50%, -50%); /* Center the modal */
-    width: 100vw; /* Set fixed width in viewport width units */
-    height: 100vh; /* Set fixed height in viewport height units */
-    max-width: 700px; /* Optional: Set maximum width */
-    max-height: 450px; /* Optional: Set maximum height */
-    /* overflow: auto;Enable scrolling if needed */
-    background-color: #fdfdff;/* Black w/ opacity*/
+    display: none; 
+    position:absolute;
+    z-index: 1000; 
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 100vw; 
+    height: 100vh; 
+    max-width: 700px; 
+    max-height: 450px; 
+    
+    background-color: #fdfdff;
 }
 
 .modal-content {
     background-color: #ffff;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 100%; /* Full width inside modal */
-    height: 100%; /* Full height inside modal */
-    box-sizing: border-box; /* Include padding in width/height calculation */
-    /* overflow-y: auto;Enable vertical scrolling */
+    width: 100%; 
+    height: 100%; 
+    box-sizing: border-box; 
+    
     border-radius: 10px;
 }
 
@@ -307,16 +307,9 @@ async function fetchTemperatureData(city) {
         
    var city = document.getElementById("citySelector").value
 
-    // Define the folder path where CSV files are stored
-    var folderPath = "stat/";
-    // console.log("City",city);
-
-    // <button onclick="handleLocationClick('${city}', 'minTemp')">Min Temp</button>
-    //     <button onclick="handleLocationClick('${city}', 'maxTemp')">Max Temp</button>
-    //     <button onclick="handleLocationClick('${city}', 'rainfall')">Rainfall</button>
     
-// Define the folder path where txt files are stored
-// var folderPath = "stat/";
+    var folderPath = "stat/";
+    
 
 
 function showModal(city) {
@@ -526,55 +519,6 @@ function handleSubmit() {
 
             return table;
         }
-
-// Function to create table from CSV data with a title
-// function createTable(data, title) {
-//     const rows = data.split(/\r?\n/); // Split by newline characters
-//     const table = document.createElement('table');
-
-//     // Create table header row
-//     const headerRow = document.createElement('tr');
-
-//     // Create title cell in the middle of the header row
-//     const titleCell = document.createElement('th');
-//     titleCell.colSpan = 3; // Span the entire row
-//     titleCell.textContent = title;
-//     headerRow.appendChild(titleCell);
-
-//     table.appendChild(headerRow);
-
-//     // Create table sub-header row
-//     const subHeaderRow = document.createElement('tr');
-//     ['Month', 'Observed(k)', 'Predicted(k)'].forEach(header => {
-//         const headerCell = document.createElement('th');
-//         headerCell.textContent = header;
-//         subHeaderRow.appendChild(headerCell);
-//     });
-//     table.appendChild(subHeaderRow);
-
-//     // Create data rows
-//     for (let i = 1; i < rows.length - 1; i++) {
-//         const cells = rows[i].split(',');
-//         if (cells.length !== 3) continue; // Skip invalid rows
-//         const dataRow = document.createElement('tr');
-//         cells.forEach(cell => {
-//             const dataCell = document.createElement('td');
-//             dataCell.textContent = cell;
-//             dataRow.appendChild(dataCell);
-//         });
-//         table.appendChild(dataRow);
-//     }
-
-//     return table;
-// }
-
-
-
-
-
- 
-
-
 
 
 function closeModal() {
