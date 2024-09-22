@@ -1,6 +1,9 @@
+
+<!-- Set-ExecutionPolicy Unrestricted -Scope Process -->
+
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Set-ExecutionPolicy Unrestricted -Scope Process -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +12,7 @@
     <style>
         body {
             /* overflow-y:scroll;  */
+             
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -16,47 +20,55 @@
             /* overflow-y: hidden; */
             font-family: Arial, sans-serif;
         }
-        /* table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
+        table {
+            margin: 20px auto; /* Center the table horizontally */
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            padding: 3px;
+            text-align: center;
+            border: 2px solid #000;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        /* Define styles for first row text */
+        table tr:first-child th {
+            text-align: center;
+        }
+        /* Define styles for vertical lines dividing cells */
+        table tr td  {
+            border-left: 2px solid #000;
+            border-right:2px solid #000;
+        }
+        /* Remove left border from first cell in each row */
+        table tr td:first-child {
+            border-left: 2px solid #000;
+        }
+     
+     
+        select {
+    width: 200px; /* Set a specific width */
+    height: 28px; /* Set a specific height */
+    border: 2px solid #bab8b8;
+    border-radius: 2px;
+    padding: 5px;
+    font-size: 14px;
+    position: relative; /* Ensure proper positioning */
+    z-index: 10; /* Ensure it appears above other elements */
+    direction: ltr; /* Left to right dropdown */
+    appearance: none; /* Remove default styles in some browsers */
+}
+select:focus {
+    overflow: visible; /* Ensures dropdown opens fully */
+}
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
 
-    th {
-      background-color: #f2f2f2;
-    } */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: center;
-    }
 
-    th, td {
-        padding: 8px;
-        border: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-    select {
-      width: 200px; /* Set a specific width */
-      height: 28px; /* Set a specific height */
-      border: 1px solid #ccc;
-      border-radius: 2px;
-      padding: 5px;
-      font-size: 14px;
-      /* font-family: Verdana, sans-serif; */
-      /* font-size: 12px; */
-    }
     button {
-      margin-top: 10px;
+      /* margin-top: 10px; */
       padding: 8px 40px;
       font-size: 14px;
       cursor: pointer;
@@ -92,6 +104,7 @@
         }
      
 
+       
        /* CSS for modal */
 .modal {
     display: none; /* Hidden by default */
@@ -102,21 +115,21 @@
     transform: translate(-50%, -50%); /* Center the modal */
     width: 100vw; /* Set fixed width in viewport width units */
     height: 100vh; /* Set fixed height in viewport height units */
-    max-width: 600px; /* Optional: Set maximum width */
-    max-height: 500px; /* Optional: Set maximum height */
-    overflow: auto;/* Enable scrolling if needed*/
+    max-width: 700px; /* Optional: Set maximum width */
+    max-height: 450px; /* Optional: Set maximum height */
+    /* overflow: auto;Enable scrolling if needed */
     background-color: #fdfdff;/* Black w/ opacity*/
 }
 
 .modal-content {
-    background-color: #fcfafa;
+    background-color: #ffff;
     margin: 0 auto; /* Center horizontally */
     padding: 20px;
-    /* border: 1px solid #888; */
+    border: 1px solid #888;
     width: 100%; /* Full width inside modal */
     height: 100%; /* Full height inside modal */
     box-sizing: border-box; /* Include padding in width/height calculation */
-    overflow-y: auto; /* Enable vertical scrolling*/
+    /* overflow-y: auto;Enable vertical scrolling */
     border-radius: 10px;
 }
 
@@ -145,7 +158,7 @@
          
             <label for="SelectLocation"  style=" font-family: Verdana, sans-serif"><b>Select Location</b></label><br/>
             <select id="citySelector" onchange="handleLocationClick(this.value)" class="box" name="selectedCity">
-           </select> <br/><br/>
+             </select> <br/><br/>
           
             <button onclick="handleSubmit()"  type="button">Submit</button>
         </form>
@@ -275,7 +288,7 @@ function zoomToCity(city) {
 
 
 async function fetchTemperatureData(city) {
-      const minFilePath = `/stat/${city}_mint.csv`;
+      const minFilePath = `/stat/${city}_mint.txt`;
       const maxFilePath = `/stat/${city}_maxt.txt`;
       const rainfallFilePath = `/stat/${city}_rainfall.txt`;
      try {
@@ -317,11 +330,36 @@ function showModal(city) {
         <div id="dataContainer"></div><br/>
     `;
     modal.style.display = "block";
+    setTimeout(resizeModal, 100);
+    function resizeModal() {
+            var modalContent = document.getElementById("dataContainer");
+            var table = modalContent.querySelector("table");
+
+            // Calculate table width and height
+            var tableWidth = table.offsetWidth;
+            var tableHeight = table.offsetHeight;
+
+            // Set modal content size based on table size
+            modalContent.style.width = Math.min(tableWidth, window.innerWidth - 50) + "px";
+            modalContent.style.height = Math.min(tableHeight, window.innerHeight - 50) + "px";
+        }
 }
+function resizeModal() {
+            var modalContent = document.getElementById("modal-content");
+            var table = modalContent.querySelector("table");
+
+            // Calculate table width and height
+            var tableWidth = table.offsetWidth;
+            var tableHeight = table.offsetHeight;
+
+            // Set modal content size based on table size
+            modalContent.style.width = Math.min(tableWidth, window.innerWidth - 50) + "px";
+            modalContent.style.height = Math.min(tableHeight, window.innerHeight - 50) + "px";
+        }
 function showRainfall(city){
     // Fetch and display rainfall data using the correct city name
     var dataContainer = document.getElementById("dataContainer");
-    dataContainer.innerHTML = "<b>Rainfall Data for " + city + "</b><br/>";
+    dataContainer.innerHTML = "<b>Rainfall Data for " + city + "</b>";
     var rainfallFilePath = `/stat/${city}_rainfall.txt`;
     fetch(rainfallFilePath)
         .then(response => {
@@ -344,7 +382,7 @@ function showRainfall(city){
 }
 function showMinTemp(city) {
     var dataContainer = document.getElementById("dataContainer");
-    dataContainer.innerHTML = "<b>Min Temperature Data for " + city + "</b><br/>";
+    dataContainer.innerHTML = "<b>Min Temperature Data for " + city + "</b>";
 
     // Fetch and display min temperature data using the correct city name
     var minFilePath = `/stat/${city}_mint.txt`;
@@ -369,7 +407,7 @@ function showMinTemp(city) {
 }
 function showMaxTemp(city) {
     var dataContainer = document.getElementById("dataContainer");
-    dataContainer.innerHTML = "<b>Max Temperature Data for " + city + "</b><br/>";
+    dataContainer.innerHTML = "<b>Max Temperature Data for " + city + "</b>";
 
     // Fetch and display max temperature data using the correct city name
     var maxFilePath = `/stat/${city}_maxt.txt`;
@@ -394,7 +432,7 @@ function showMaxTemp(city) {
 }
  // Function to fetch and display full data from the selected CSV files
  function displayFullData(city) {
-    var maxFilePath = `/stat/${city}_maxt.txt`;
+    var maxFilePath =  `/stat/${city}_maxt.txt`;
     var minFilePath = `/stat/${city}_mint.txt`;
     var rainfallFilePath = `/stat/${city}_rainfall.txt`;
 
@@ -452,46 +490,83 @@ function handleSubmit() {
         zoomToSelectedCity()
       }
     }
-//to create table
-function createTable(data, title) {
-    const rows = data.split(/\r?\n/); // Split by newline characters
-    const table = document.createElement('table');
 
-    // Create table title row
-    const titleRow = document.createElement('tr');
-    const titleCell = document.createElement('th');
-  
-    titleCell.colSpan = 2;  // Span the entire row
-    titleCell.textContent = title;
-    titleRow.appendChild(titleCell);
-    table.appendChild(titleRow);
+    function createTable(data, title) {
+            const rows = data.split(/\r?\n/); // Split by newline characters
+            const table = document.createElement('table');
 
-    // Create table header row
-    const headerRow = document.createElement('tr');
-    rows[0].split(',').forEach(header => {
-        const headerCell = document.createElement('th');
-        headerCell.textContent = header;
-        headerRow.appendChild(headerCell);
-    });
-    table.appendChild(headerRow);
+            // Create table title row
+            const titleRow = document.createElement('tr');
+            const titleCell = document.createElement('th');
+            titleCell.colSpan = 3; // Span the entire row
+            titleCell.textContent = title;
+            titleRow.appendChild(titleCell);
+            table.appendChild(titleRow);
 
-    // Create data rows
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].split(',');
-        const dataRow = document.createElement('tr');
-        cells.forEach(cell => {
-            const dataCell = document.createElement('td');
-            dataCell.textContent = cell;
-            dataRow.appendChild(dataCell);
-        });
-        table.appendChild(dataRow);
-    }
+            // Create table header row
+            const headerRow = document.createElement('tr');
+            rows[0].split(' ').forEach(header => {
+                const headerCell = document.createElement('th');
+                headerCell.textContent = header;
+                headerRow.appendChild(headerCell);
+            });
+            table.appendChild(headerRow);
 
-    return table;
-}
+            // Create data rows
+            for (let i = 1; i < rows.length - 1; i++) {
+                const cells = rows[i].split(' ');
+                const dataRow = document.createElement('tr');
+                cells.forEach(cell => {
+                    const dataCell = document.createElement('td');
+                    dataCell.textContent = cell;
+                    dataRow.appendChild(dataCell);
+                });
+                table.appendChild(dataRow);
+            }
 
+            return table;
+        }
 
+// Function to create table from CSV data with a title
+// function createTable(data, title) {
+//     const rows = data.split(/\r?\n/); // Split by newline characters
+//     const table = document.createElement('table');
 
+//     // Create table header row
+//     const headerRow = document.createElement('tr');
+
+//     // Create title cell in the middle of the header row
+//     const titleCell = document.createElement('th');
+//     titleCell.colSpan = 3; // Span the entire row
+//     titleCell.textContent = title;
+//     headerRow.appendChild(titleCell);
+
+//     table.appendChild(headerRow);
+
+//     // Create table sub-header row
+//     const subHeaderRow = document.createElement('tr');
+//     ['Month', 'Observed(k)', 'Predicted(k)'].forEach(header => {
+//         const headerCell = document.createElement('th');
+//         headerCell.textContent = header;
+//         subHeaderRow.appendChild(headerCell);
+//     });
+//     table.appendChild(subHeaderRow);
+
+//     // Create data rows
+//     for (let i = 1; i < rows.length - 1; i++) {
+//         const cells = rows[i].split(',');
+//         if (cells.length !== 3) continue; // Skip invalid rows
+//         const dataRow = document.createElement('tr');
+//         cells.forEach(cell => {
+//             const dataCell = document.createElement('td');
+//             dataCell.textContent = cell;
+//             dataRow.appendChild(dataCell);
+//         });
+//         table.appendChild(dataRow);
+//     }
+
+//     return table;
+// }
 
 
 
